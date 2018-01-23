@@ -46,7 +46,7 @@ class Really_Simple_News {
 
   		$this->includes();
 
-	        add_action( 'init', array( $this, 'load_language' ) );
+        add_action( 'init', array( $this, 'load_language' ) );
 		add_action( 'init', array( $this, 'register_post_type' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
@@ -234,8 +234,8 @@ class Really_Simple_News {
 	/**
 	 * shortcode_articles
 	 */
-	function shortcode_articles( $atts ) {
-		$html = $this->shortcode_atts( $atts );
+	function shortcode_articles( $attr ) {
+		$html = $this->shortcode_atts( $attr );
 		return $html;
 	}
 
@@ -243,19 +243,19 @@ class Really_Simple_News {
 	/**
 	 * shortcode_atts
 	 */
-	function shortcode_atts( $atts ) {
+	function shortcode_atts( $attr ) {
 		global $post;
 		
-		extract( shortcode_atts( array(
+		$atts = shortcode_atts( array(
 			'number' => '-1',
 			'format' => 'm/Y'
-		), $atts ) );
+		), $attr, 'articles' );
 		
 		$html = '';
 		
 	    $args = array(
 			'post_type' => 'article',
-			'numberposts' => $number,
+			'numberposts' => $atts['number'],
 			'post_status' => null,
 			'orderby' => 'date',
 			'order' => 'DESC'
@@ -270,7 +270,7 @@ class Really_Simple_News {
 				$article_url = ( get_post_meta( $article->ID, '_rsn_article_url', true ) ) ? get_post_meta( $article->ID, '_rsn_article_url', true ) : '';
 				$article_pdf = ( get_post_meta( $article->ID, '_rsn_article_pdf', true ) ) ? get_post_meta( $article->ID, '_rsn_article_pdf', true ) : '';
 				$html .= '<li>
-					<span class="article-date">' . get_the_date( $format, $article->ID ) . '</span> - ';
+					<span class="article-date">' . get_the_date( $atts['format'], $article->ID ) . '</span> - ';
 				if ( $article_url ) {
 					$html .= '<a class="article-link" target="_blank" rel="bookmark" href="'. esc_url( $article_url ) .'">' . get_the_title( $article->ID ) . '</a>';
 				} else {
