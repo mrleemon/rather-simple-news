@@ -1,4 +1,4 @@
-=== Really Simple News ===
+=== Rather Simple News ===
 Contributors: Oscar Ciutat
 Tags: news, articles, external, links, pdf, files
 Requires at least: 4.0

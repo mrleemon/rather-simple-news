@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Really Simple News
+Plugin Name: Rather Simple News
 Version: v1.0
 Plugin URI:
 Author: Oscar Ciutat
@@ -8,7 +8,7 @@ Author URI: http://oscarciutat.com/code/
 Description: A really simple list of external links
 */
 
-class Really_Simple_News {
+class Rather_Simple_News {
 
 	/**
 	 * Plugin instance.
@@ -87,7 +87,7 @@ class Really_Simple_News {
 	 *
 	 */
 	function load_language() {
-		load_plugin_textdomain( 'really-simple-news', '', dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'rather-simple-news', '', dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	
@@ -95,7 +95,7 @@ class Really_Simple_News {
 	 * enqueue_scripts
 	 */
 	function enqueue_scripts() {
-		wp_enqueue_style( 'really-simple-news-css', plugins_url( '/style.css', __FILE__), array( 'dashicons' ) );
+		wp_enqueue_style( 'rather-simple-news-css', plugins_url( '/style.css', __FILE__), array( 'dashicons' ) );
 	}
 
 
@@ -104,7 +104,7 @@ class Really_Simple_News {
 	 */
 	function admin_enqueue_scripts() {
 		wp_enqueue_media();
-		wp_enqueue_script( 'really-simple-news', plugins_url( '/js/backend.js', __FILE__), array( 'jquery' ), false, true );
+		wp_enqueue_script( 'rather-simple-news', plugins_url( '/assets/js/backend.js', __FILE__), array( 'jquery' ), false, true );
 	}
 
 
@@ -116,16 +116,16 @@ class Really_Simple_News {
     function register_post_type() {
 		
 		$labels = array(
-			'name' => __( 'Articles', 'really-simple-news' ),
-			'singular_name' => __( 'Article', 'really-simple-news' ),
-			'add_new' => __( 'Add New Article', 'really-simple-news' ),
-			'add_new_item' => __( 'Add New Article', 'really-simple-news' ),
-			'edit_item' => __( 'Edit Article', 'really-simple-news' ),
-			'new_item' => __( 'New Article', 'really-simple-news' ),
-			'view_item' => __( 'View Article', 'really-simple-news' ),
-			'search_items' => __( 'Search Articles', 'really-simple-news' ),
-			'not_found' => __( 'No Articles found', 'really-simple-news' ),
-			'not_found_in_trash' => __( 'No Articles found in Trash', 'really-simple-news' )
+			'name' => __( 'Articles', 'rather-simple-news' ),
+			'singular_name' => __( 'Article', 'rather-simple-news' ),
+			'add_new' => __( 'Add New Article', 'rather-simple-news' ),
+			'add_new_item' => __( 'Add New Article', 'rather-simple-news' ),
+			'edit_item' => __( 'Edit Article', 'rather-simple-news' ),
+			'new_item' => __( 'New Article', 'rather-simple-news' ),
+			'view_item' => __( 'View Article', 'rather-simple-news' ),
+			'search_items' => __( 'Search Articles', 'rather-simple-news' ),
+			'not_found' => __( 'No Articles found', 'rather-simple-news' ),
+			'not_found_in_trash' => __( 'No Articles found in Trash', 'rather-simple-news' )
 		);
       
 		$args = array(
@@ -153,7 +153,7 @@ class Really_Simple_News {
 	*/
 
 	function add_article_meta_boxes() {
-		add_meta_box( 'article-links', __( 'Links', 'really-simple-news' ), array( $this , 'article_links_meta_box' ), 'article', 'normal', 'low' );
+		add_meta_box( 'article-links', __( 'Links', 'rather-simple-news' ), array( $this , 'article_links_meta_box' ), 'article', 'normal', 'low' );
 	}
 
 
@@ -171,20 +171,20 @@ class Really_Simple_News {
 
 		<table class="form-table article-url">
 		<tr>
-			<th scope="row"><label for="article_url"><?php _e( 'URL', 'really-simple-news' ); ?></label></th>
+			<th scope="row"><label for="article_url"><?php _e( 'URL', 'rather-simple-news' ); ?></label></th>
 			<td>
 			<input class="large-text" id="article_url" type="url" name="article_url" placeholder="http://" value="<?php echo esc_url( $article_url ); ?>" />
-			<p class="description"><?php _e( 'Link to the article', 'really-simple-news' ); ?></p>
+			<p class="description"><?php _e( 'Link to the article', 'rather-simple-news' ); ?></p>
 			</td>
 		</tr>
 		</table>
 		<table class="form-table article-pdf">
 		<tr>
-			<th scope="row"><label for="article_pdf"><?php _e( 'PDF', 'really-simple-news' ); ?></label></th>
+			<th scope="row"><label for="article_pdf"><?php _e( 'PDF', 'rather-simple-news' ); ?></label></th>
 			<td>
 			<input class="regular-text" id="article_pdf" type="url" name="article_pdf" placeholder="http://" value="<?php echo esc_url( $article_pdf ); ?>" />
-			<input class="button" id="select_pdf" type="button" data-choose="<?php esc_attr_e( 'Media Library' ); ?>" value="<?php _e( 'Select File', 'really-simple-news' ); ?>" />
-			<p class="description"><?php _e( 'Link to an additional PDF file', 'really-simple-news' ); ?></p>
+			<input class="button" id="select_pdf" type="button" data-choose="<?php esc_attr_e( 'Media Library' ); ?>" value="<?php _e( 'Select File', 'rather-simple-news' ); ?>" />
+			<p class="description"><?php _e( 'Link to an additional PDF file', 'rather-simple-news' ); ?></p>
 			</td>
 		</tr>
 		</table>
@@ -300,7 +300,7 @@ class Really_Simple_News {
 		foreach( $columns as $key => $value ) {
 			if ( $key == 'date' ) {
 				// Put the URL column before the Date column
-				$new['url'] = __( 'URL', 'really-simple-news' );
+				$new['url'] = __( 'URL', 'rather-simple-news' );
 			}
 			$new[$key] = $value;
 		}
@@ -323,4 +323,4 @@ class Really_Simple_News {
 
 }
 
-add_action( 'plugins_loaded', array ( Really_Simple_News::get_instance(), 'plugin_setup' ) );
+add_action( 'plugins_loaded', array ( Rather_Simple_News::get_instance(), 'plugin_setup' ) );
