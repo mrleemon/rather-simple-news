@@ -162,13 +162,13 @@ class Rather_Simple_News {
 	*/
   
 	function article_links_meta_box() {
-		global $post;
+        global $post;
+        
 		$article_url = ( get_post_meta( $post->ID, '_rsn_article_url', true ) ) ? get_post_meta( $post->ID, '_rsn_article_url', true ) : '';
-		$article_pdf = ( get_post_meta( $post->ID, '_rsn_article_pdf', true ) ) ? get_post_meta( $post->ID, '_rsn_article_pdf', true ) : '';
+        $article_pdf = ( get_post_meta( $post->ID, '_rsn_article_pdf', true ) ) ? get_post_meta( $post->ID, '_rsn_article_pdf', true ) : '';
+        
+        wp_nonce_field( basename( __FILE__ ), 'rsn_metabox_nonce' );
 	?>
-
-		<input type="hidden" id="metabox_nonce" name="metabox_nonce" value="<?php echo wp_create_nonce( basename( __FILE__ ) ); ?>" />
-
 		<table class="form-table article-url">
 		<tr>
 			<th scope="row"><label for="article_url"><?php _e( 'URL', 'rather-simple-news' ); ?></label></th>
@@ -197,17 +197,17 @@ class Rather_Simple_News {
 	*/
  
 	function save_article( $post_id ) {
-		// verify nonce
-		if ( isset( $_POST['metabox_nonce'] ) && !wp_verify_nonce( $_POST['metabox_nonce'], basename(__FILE__) ) ) {
+		// Verify nonce
+		if ( !isset( $_POST['rsn_metabox_nonce'] ) || !wp_verify_nonce( $_POST['rsn_metabox_nonce'], basename(__FILE__) ) ) {
 			return $post_id;
 		}
 	
-		// is autosave?
+		// Is autosave?
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return $post_id;
 		}
 
-		// check permissions
+		// Check permissions
 		if ( isset( $_POST['post_type'] ) ) {
 			if ( 'page' == $_POST['post_type'] ) {
 				if ( !current_user_can( 'edit_page', $post_id ) ) {
